@@ -1,30 +1,54 @@
 """
 matris toplamı cıkarma carpma                                           tamam
 skaler sayı carpma                                                      tamam
-A verilip simetrik metris cıkarma  aynı sek. ters simetrik metris cıkarma
-özel carpma kısımları 
+A verilip simetrik metris cıkarma  aynı sek. ters simetrik metris cıkarma tamam
+özel carpma kısımları                                                   tamam
 sıfır ve birim matris                                                   tamam
-matrisin tersi alma
+matrisin tersi alma                                                     tamam
 cıkıs taplo seklinde olacak                                             tamam
-
+son oalrak hepsini ondalık yap
 """
 import numpy as np
 
-A=[#4X3
-    [1,1,1],
-    [1,1,1],
-    [1,1,1],
-    [1,1,1]
-  
+A=[#3 3
+    [-1,2,3],
+    [2,4,7],
+    [1,-1,2] 
 ]
-B=[#2X3
-    [9,8,7],
-    [6,5,4],
-    [6,5,4],
-    [6,5,4],
+B=[#3 2
+    [1,-2],
+    [5,-6],
+    [-2,4]
+]
 
 
-]
+    
+
+def Carpma(A, B):#dogru
+    ara = []
+    C = []
+    top = 0
+    satırA = len(A)
+    sutunA = len(A[0])
+    satırB = len(B)
+    sutunB = len(B[0])
+    
+    if sutunA == satırB:
+        for i in range(satırA):
+            for j in range(sutunB):
+                for k in range(sutunA):
+                    top += A[i][k] * B[k][j]
+                
+                ara.append(top)
+                top = 0
+            
+            C.append(ara)
+            ara = []
+        
+        return C
+    else:
+        return "Satır ve sütun sayıları eşit değil. Matris çarpma işlemi yapılamaz."
+
 def show(C):
     if isinstance(C, list):
         for i in range(len(C)):
@@ -91,27 +115,6 @@ def skaler_carpma(x,A):
         ara=[]
     return C
 
-def Carpma(A,B):
-    ara=[]
-    C=[]
-    top=0
-    satırA=len(A)#3
-    sutunA=len(A[0])#3
-    satırB=len(B)
-    sutunB=len(B[0])
-    if sutunA==satırB:
-        for i in range(satırA):#3     i 2  j 2
-            for j in range(sutunB):#3
-                top=A[i][0]*B[0][j]
-                top=top+A[i][1]*B[1][j]
-               # print("satır: ",str(i) +" sutun: ",str(j) )
-                ara.append(top)
-                top=0
-            C.append(ara)
-            ara=[]
-        return C
-    else:
-        return "satır sutun aynı degil "
 
 def sifir(X,Y):
     C=np.zeros((X,Y),dtype=int)
@@ -160,7 +163,7 @@ def kroneker_carp(A,B):# gosterimi pek anlaşılır degil dogru calısıyor
         ara=[]
     return C
 
-def tranpoz(A):
+def tranpoz(A):#dogru
     satırA=len(A)#X 4
     sutunA=len(A[0])#Y 3
     C=sifir(sutunA,satırA) # 3X4
@@ -169,7 +172,29 @@ def tranpoz(A):
             C[j][i]=A[i][j]
     return C
 
+def find_simetrik(A):
+    satırA=len(A)#X 4
+    sutunA=len(A[0])#Y 3
+    if satırA==sutunA:
+        C=sifir(sutunA,satırA)
+        for i in range(satırA):
+            for j in range(sutunA):
+                C[i][j]=(A[i][j]+A[j][i])/2
 
+        return C
+    return "bu kare matris değil"
+
+def find_ters_simetrik(A):
+    satırA=len(A)#X 4
+    sutunA=len(A[0])#Y 3
+    if satırA==sutunA:
+        C=sifir(sutunA,satırA)
+        for i in range(satırA):
+            for j in range(sutunA):
+                C[i][j]=(A[i][j]-A[j][i])/2
+
+        return C
+    return "bu kare matris değil"
 
 
 
@@ -181,7 +206,12 @@ def tranpoz(A):
 #C=birim(3)
 #result=hademad_carp(A,B)
 #result=kroneker_carp(A,B)
-result=tranpoz(B)
+#result=tranpoz(A)
+# D=find_simetrik(B)
+# E=find_ters_simetrik(B)
+#result=Carpma(A,B)
+
+
 show(result)
 
 
